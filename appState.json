@@ -1,0 +1,77 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "41382ea9-2b5b-4c13-8bdc-8c261f2e953d": {
+        "id": "41382ea9-2b5b-4c13-8bdc-8c261f2e953d",
+        "parent": null,
+        "name": "ChamindaHello2",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "434e6bdc-f693-4231-ae26-1793cb0551af"
+        ],
+        "isRemovable": false,
+        "filePath": "ChamindaHello2"
+      },
+      "434e6bdc-f693-4231-ae26-1793cb0551af": {
+        "id": "434e6bdc-f693-4231-ae26-1793cb0551af",
+        "parent": "41382ea9-2b5b-4c13-8bdc-8c261f2e953d",
+        "name": "lambda.js",
+        "type": "LAMBDA_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "ChamindaHello2/lambda.js",
+        "code": "\nlet Swagger = require('swagger-client');\n\nexports.handler = function (event, context, callback) {\n\n    Swagger.http({\n        url: 'https://services.apixplatform.com/api-sandbox/application/token',\n        method: 'post',\n        query: {},\n        headers: { \"Accept\": \"*/*\", \"Content-Type\": \"application/json\" },\n        body: JSON.stringify({\n            \"userName\": \"Your email address\",\n            \"password\": \"Your password\"\n        })\n    }).then((response) => {\n        var access_token = \"bearer \" + response.body.access_token;\n        // Insert new API calls here to call with APIX Access Token\n        Swagger.http({\n            url: `https://api.apixplatform.com/sbaccount/1.0/AccountService/accounts/account-types`,\n            method: 'get',\n            query: { \"page\": \"0\", \"size\": \"1\" },\n            headers: { \"X-Authorization\": access_token, \"Accept\": \"*/*\" }\n        }).then((response) => {\n            // your code goes here\n        }).catch((err) => {\n            // error handling goes here\n        });\n\n\n        callback(null, access_token);\n    }).catch((err) => {\n        console.log(err);\n        callback(\"Execution failed\");\n    });\n\n}",
+        "triggers": [],
+        "config": {
+          "runtime": "nodejs8.10",
+          "timeout": 60,
+          "memory": 128
+        }
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "41382ea9-2b5b-4c13-8bdc-8c261f2e953d",
+    "openFiles": [
+      "434e6bdc-f693-4231-ae26-1793cb0551af"
+    ],
+    "currentFileId": "434e6bdc-f693-4231-ae26-1793cb0551af",
+    "resources": {},
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {
+        "swagger-client": {
+          "name": "swagger-client",
+          "version": "3.8.21"
+        }
+      }
+    },
+    "lambdaId": "434e6bdc-f693-4231-ae26-1793cb0551af"
+  },
+  "PROJECT_META": {
+    "projectName": "ChamindaHello2",
+    "projectDescription": "ChamindaHello2",
+    "projectVersion": "1.0.0",
+    "projectRegion": "ap-southeast-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1551231181794
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "ChamindaHello2",
+      "url": "https://github.com/apixDemo/Chaminda2"
+    }
+  }
+}
